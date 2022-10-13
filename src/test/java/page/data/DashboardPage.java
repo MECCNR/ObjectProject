@@ -6,6 +6,8 @@ import com.codeborne.selenide.SelenideElement;
 import data.DataHelper;
 import lombok.val;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -33,12 +35,9 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public void transferMoney(DataHelper.CardInfo card, DataHelper.CardInfo card2, int amount) {
+    public TransferPage enterTransfer(DataHelper.CardInfo card) {
         String firstCard = card.getCardId();
-        String secondNumber = card2.getCardNumber();
         cards.findBy(Condition.attributeMatching("data-test-id", firstCard)).find("button").click();
-        $("[data-test-id=amount] input").setValue(String.valueOf(amount));
-        $("[data-test-id=from] input").setValue(secondNumber);
-        $("[data-test-id=action-transfer]").click();
+        return new TransferPage();
     }
 }
